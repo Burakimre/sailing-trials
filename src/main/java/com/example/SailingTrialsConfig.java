@@ -24,7 +24,7 @@ public interface SailingTrialsConfig extends Config
             description = "Show the path drawn for route 1",
             section = barracudaTrialsSection
     )
-    default boolean showRoute1()
+    default boolean route1Visible()
     {
         return true;
     }
@@ -60,7 +60,7 @@ public interface SailingTrialsConfig extends Config
             description = "Show the path drawn for route 2",
             section = barracudaTrialsSection
     )
-    default boolean showRoute2()
+    default boolean route2Visible()
     {
         return true;
     }
@@ -96,7 +96,7 @@ public interface SailingTrialsConfig extends Config
             description = "Show the path drawn for route 3",
             section = barracudaTrialsSection
     )
-    default boolean showRoute3()
+    default boolean route3Visible()
     {
         return true;
     }

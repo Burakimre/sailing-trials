@@ -8,23 +8,13 @@ import lombok.Setter;
 import net.runelite.api.coords.WorldPoint;
 
 public class Route {
-    @Getter
-    private final List<WorldPoint> points;
+    @Getter private final int id;
 
-    @Getter @Setter
-    private Color baseLineColor;
+    @Getter private final List<WorldPoint> points;
 
-    @Getter @Setter
-    private Color tracerLineColor;
-
-    @Getter @Setter
-    private boolean visible = true;
-
-    public Route(List<WorldPoint> points, Color baseLineColor, Color tracerLineColor, boolean visible)
+    public Route(int id, List<WorldPoint> points)
     {
+        this.id = id;
         this.points = points;
-        this.baseLineColor = baseLineColor;
-        this.tracerLineColor = tracerLineColor;
-        this.visible = visible;
     }
 }

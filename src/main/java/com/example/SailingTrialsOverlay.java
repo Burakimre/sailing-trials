@@ -16,15 +16,17 @@ public class SailingTrialsOverlay extends Overlay
 {
     private final Client client;
     private final RouteManager routeManager;
+    private final SailingTrialsConfig sailingTrialsConfig;
 
     private double progress = 0;
     private static final double speed = 0.01;
 
     @Inject
-    public SailingTrialsOverlay(Client client, RouteManager routeManager)
+    public SailingTrialsOverlay(Client client, RouteManager routeManager, SailingTrialsConfig sailingTrialsConfig)
     {
         this.client = client;
         this.routeManager = routeManager;
+        this.sailingTrialsConfig = sailingTrialsConfig;
 
         setPosition(OverlayPosition.DYNAMIC);
         setLayer(OverlayLayer.UNDER_WIDGETS);
@@ -63,7 +65,7 @@ public class SailingTrialsOverlay extends Overlay
 
         // Base path line
         g.setStroke(new BasicStroke(2f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-        g.setColor(route.getBaseLineColor());
+        g.setColor(getBaseLineColor(route.getId()));
 
         for (int i = 0; i < canvasPts.size() - 1; i++)
         {
@@ -80,7 +82,7 @@ public class SailingTrialsOverlay extends Overlay
         List<Point> segPoints = buildSegmentPoints(canvasPts, startDist, 25);
 
         g.setStroke(new BasicStroke(2f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-        g.setColor(route.getTracerLineColor());
+        g.setColor(getTracerLineColor(route.getId()));
 
         for (int i = 0; i < segPoints.size() - 1; i++)
         {
@@ -160,5 +162,50 @@ public class SailingTrialsOverlay extends Overlay
             return null;
 
         return Perspective.localToCanvas(client, lp.getX(), lp.getY(), client.getTopLevelWorldView().getPlane());
+    }
+
+    private boolean isRouteVisible(int id)
+    {
+        switch (id)
+        {
+            case 1:
+                return sailingTrialsConfig.route1Visible();
+            case 2:
+                return sailingTrialsConfig.route2Visible();
+            case 3:
+                return sailingTrialsConfig.route3Visible();
+            default:
+                return false;
+        }
+    }
+
+    private Color getBaseLineColor(int id)
+    {
+        switch (id)
+        {
+            case 1:
+                return sailingTrialsConfig.baseLineColorRoute1();
+            case 2:
+                return sailingTrialsConfig.baseLineColorRoute2();
+            case 3:
+                return sailingTrialsConfig.baseLineColorRoute3();
+            default:
+                return Color.WHITE;
+        }
+    }
+
+    private Color getTracerLineColor(int id)
+    {
+        switch (id)
+        {
+            case 1:
+                return sailingTrialsConfig.tracerLineColorRoute1();
+            case 2:
+                return sailingTrialsConfig.tracerLineColorRoute2();
+            case 3:
+                return sailingTrialsConfig.tracerLineColorRoute3();
+            default:
+                return Color.WHITE;
+        }
     }
 }
